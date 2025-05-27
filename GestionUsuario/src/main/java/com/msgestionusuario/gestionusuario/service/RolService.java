@@ -23,10 +23,6 @@ public class RolService {
         return rolRepository.findById(idRol);
     }
 
-   /*  public Rol findxNombreRol(String nombreRol) {
-        return rolRepository.findByNombreRol(nombreRol);
-    
-    }*/
 
     public List<Rol> findAllRoles() {
         return rolRepository.findAll();

@@ -68,7 +68,7 @@ public class UsuarioController {
 
     @GetMapping("/{idUsuario}")
     public ResponseEntity<Usuario> getUsuarioXid(@PathVariable Integer idUsuario) {
-        Usuario buscado=usuarioService.findByXIdUsuario(idUsuario).orElse(null); //.orElse controla el tipo Optional<Cliente>
+        Usuario buscado=usuarioService.findByXIdUsuario(idUsuario).orElse(null); 
         if(buscado==null)
         {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

@@ -55,16 +55,7 @@ public class RolController {
             return new ResponseEntity<>(rol, HttpStatus.ACCEPTED);
         }
     }
-/* 
-    @GetMapping("/{nombreRol}")
-    public ResponseEntity<Rol> getRolxNombreRol(@PathVariable String nombreRol) {
-        Rol rol = rolService.findxNombreRol(nombreRol);
-        if (rol == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(rol, HttpStatus.ACCEPTED);
-        }
-    }*/
+
     
     @PutMapping("/{idRol}")
     public ResponseEntity<Rol> putRol(@RequestBody Rol rol) {
