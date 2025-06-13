@@ -39,6 +39,7 @@ public class RolService {
         return null;
     }
 
+    /* NO SE DEBERIA PODER ELMINIAR LO ROLES NO??
     public Rol eliminarRol(int idRol) {
         Rol rol = rolRepository.findById(idRol);
         if (rol != null) {
@@ -47,6 +48,6 @@ public class RolService {
         }
         return null;
     }
-
+ */
 }
 

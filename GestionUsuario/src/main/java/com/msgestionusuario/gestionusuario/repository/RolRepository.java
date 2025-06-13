@@ -13,7 +13,7 @@ public interface RolRepository extends JpaRepository<Rol, Integer> {
     Rol save(Rol rol);
     Rol findById(int idRol);
     List<Rol> findAll();
-    Rol deleteById(int idRol);
+    /// Rol deleteById(int idRol); NO SE DEBERIA PODER ELMINIAR LO ROLES NO??
 
     
 
