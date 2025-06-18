@@ -11,7 +11,7 @@ import com.msgestionusuario.gestionusuario.repository.RolRepository;
 
 @Service
 public class RolService {
-    
+
     @Autowired
     private RolRepository rolRepository;
 
@@ -19,10 +19,9 @@ public class RolService {
         return rolRepository.save(rol);
     }
 
-    public Rol findxIdRol(int idRol) {
+    public Optional<Rol> findXIdRol(int idRol) {
         return rolRepository.findById(idRol);
     }
-
 
     public List<Rol> findAllRoles() {
         return rolRepository.findAll();
@@ -39,15 +38,15 @@ public class RolService {
         return null;
     }
 
-    /* NO SE DEBERIA PODER ELMINIAR LO ROLES NO??
-    public Rol eliminarRol(int idRol) {
-        Rol rol = rolRepository.findById(idRol);
-        if (rol != null) {
-            rolRepository.deleteById(idRol);
-            return rol;
-        }
-        return null;
-    }
- */
+    /*
+     * NO SE DEBERIA PODER ELMINIAR LO ROLES NO??
+     * public Rol eliminarRol(int idRol) {
+     * Rol rol = rolRepository.findById(idRol);
+     * if (rol != null) {
+     * rolRepository.deleteById(idRol);
+     * return rol;
+     * }
+     * return null;
+     * }
+     */
 }
-
