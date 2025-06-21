@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.msgestionusuario.gestionusuario.model.Rol;
+import com.msgestionusuario.gestionusuario.model.Roles;
 import com.msgestionusuario.gestionusuario.repository.RolRepository;
 
 @Service
@@ -19,8 +20,12 @@ public class RolService {
         return rolRepository.save(rol);
     }
 
-    public Optional<Rol> findXIdRol(int idRol) {
-        return rolRepository.findById(idRol);
+    public Rol findxNombreRol(String nombreRol) {
+        return rolRepository.findByNombreRol(Roles.valueOf(nombreRol));
+    }
+
+    public Rol findxIdRol(int idRol) {
+        return rolRepository.findById(idRol).orElse(null);
     }
 
     public List<Rol> findAllRoles() {
@@ -38,15 +43,16 @@ public class RolService {
         return null;
     }
 
-    /*
-     * NO SE DEBERIA PODER ELMINIAR LO ROLES NO??
-     * public Rol eliminarRol(int idRol) {
-     * Rol rol = rolRepository.findById(idRol);
-     * if (rol != null) {
-     * rolRepository.deleteById(idRol);
-     * return rol;
-     * }
-     * return null;
-     * }
-     */
+    public Rol eliminarRol(int idRol) {
+        Optional<Rol> rolOpt = rolRepository.findById(idRol);
+        if (rolOpt.isPresent()) {
+            Rol rol = rolOpt.get();
+            if (rol.getUsuarios() == null || rol.getUsuarios().isEmpty()) {
+                rolRepository.deleteById(idRol);
+                return rol;
+            }
+        }
+        return null;
+    }
+
 }

@@ -68,7 +68,7 @@ public class UsuarioControllerTest {
 
     @Test
     void testCrearUsuario() throws Exception {
-        Usuario nuevo = new Usuario(null, "Sofía", "Martínez", "sofia@mail.com", rol);
+        Usuario nuevo = new Usuario(0, "Sofía", "Martínez", "sofia@mail.com", rol);
         Usuario guardado = new Usuario(1, "Sofía", "Martínez", "sofia@mail.com", rol);
 
         when(usuarioService.findByXIdUsuario(null)).thenReturn(Optional.empty());

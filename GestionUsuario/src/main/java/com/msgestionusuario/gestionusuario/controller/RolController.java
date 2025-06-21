@@ -2,11 +2,10 @@ package com.msgestionusuario.gestionusuario.controller;
 
 import java.util.List;
 
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-/// import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +27,7 @@ public class RolController {
 
     @PostMapping
     public ResponseEntity<Rol> postRol(@RequestBody Rol rol) {
-        Rol buscado = rolService.findXIdRol(rol.getIdRol()).orElse(null);
+        Rol buscado = rolService.findxIdRol(rol.getIdRol());
         if (buscado == null) {
             return new ResponseEntity<>(rolService.crearRol(rol), HttpStatus.ACCEPTED);
         } else {
@@ -46,14 +45,23 @@ public class RolController {
         }
     }
 
-    @GetMapping("/{idRol}")
-    public ResponseEntity<Rol> getRolXId(@PathVariable Integer idRol) {
-        Optional<Rol> rolOpt = rolService.findXIdRol(idRol);
-
-        if (rolOpt.isEmpty()) {
+    @GetMapping("/id={idRol}")
+    public ResponseEntity<Rol> getRolxId(@PathVariable Integer idRol) {
+        Rol rol = rolService.findxIdRol(idRol);
+        if (rol == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(rolOpt.get(), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(rol, HttpStatus.ACCEPTED);
+        }
+    }
+
+    @GetMapping("/nombreRol={nombreRol}")
+    public ResponseEntity<Rol> getRolxNombreRol(@PathVariable String nombreRol) {
+        Rol rol = rolService.findxNombreRol(nombreRol);
+        if (rol == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(rol, HttpStatus.ACCEPTED);
         }
     }
 
@@ -67,18 +75,14 @@ public class RolController {
         }
     }
 
-    /*
-     * NO SE DEBERIA PODER ELMINIAR LO ROLES NO??
-     * 
-     * @DeleteMapping("/{idRol}")
-     * public ResponseEntity<Rol> deleteRol(@PathVariable Integer idRol) {
-     * Rol eliminado = rolService.eliminarRol(idRol);
-     * if (eliminado != null) {
-     * return new ResponseEntity<>(eliminado, HttpStatus.OK);
-     * } else {
-     * return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-     * }
-     * }
-     */
+    @DeleteMapping("/{idRol}")
+    public ResponseEntity<Rol> deleteRol(@PathVariable Integer idRol) {
+        Rol eliminado = rolService.eliminarRol(idRol);
+        if (eliminado != null) {
+            return new ResponseEntity<>(eliminado, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
 }

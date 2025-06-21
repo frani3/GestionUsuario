@@ -36,7 +36,7 @@ class UsuarioServiceTest {
 
     @Test
     void testCrearUsuario() {
-        Usuario usuario = new Usuario(null, "Juan", "Pérez", "juan@mail.com", rol);
+        Usuario usuario = new Usuario(0, "Juan", "Pérez", "juan@mail.com", rol);
         Usuario usuarioGuardado = new Usuario(1, "Juan", "Pérez", "juan@mail.com", rol);
 
         when(usuarioRepository.save(usuario)).thenReturn(usuarioGuardado);

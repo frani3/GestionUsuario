@@ -36,7 +36,7 @@ public class Rol {
     @Column(length = 50, nullable = false)
     private String funcion;
 
-    @OneToMany(mappedBy = "rol", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "rol")
     @JsonManagedReference
 
     private List<Usuario> usuarios;

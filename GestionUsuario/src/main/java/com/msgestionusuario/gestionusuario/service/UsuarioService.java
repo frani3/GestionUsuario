@@ -13,14 +13,7 @@ import com.msgestionusuario.gestionusuario.repository.UsuarioRepository;
 
 
 public class UsuarioService {
-  
-    
-      /*
-       +Usuario crearUsuario(Usuario: usuario)
-        +Usuario editarUsuario(Usuario: usuario)
-        + eliminarUsuario(String idUsuario)
-        +List<Usuario> encontrarUsuarios()
-       */
+
 
     @Autowired
     private UsuarioRepository usuarioRepository;
