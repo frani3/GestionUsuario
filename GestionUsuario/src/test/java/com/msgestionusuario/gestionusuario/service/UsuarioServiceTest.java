@@ -36,8 +36,8 @@ class UsuarioServiceTest {
 
     @Test
     void testCrearUsuario() {
-        Usuario usuario = new Usuario(0, "Juan", "Pérez", "juan@mail.com", rol);
-        Usuario usuarioGuardado = new Usuario(1, "Juan", "Pérez", "juan@mail.com", rol);
+        Usuario usuario = new Usuario(0, "Francisca", "Barrera", "Francisca@mail.com", rol);
+        Usuario usuarioGuardado = new Usuario(1, "Francisca", "Barrera", "Francisca@mail.com", rol);
 
         when(usuarioRepository.save(usuario)).thenReturn(usuarioGuardado);
 
@@ -48,20 +48,20 @@ class UsuarioServiceTest {
 
     @Test
     void testFindByXIdUsuario() {
-        Usuario usuario = new Usuario(1, "Ana", "López", "ana@mail.com", rol);
+        Usuario usuario = new Usuario(1, "Ignacio", "Sorko", "Ignacio@mail.com", rol);
 
         when(usuarioRepository.findById(1)).thenReturn(Optional.of(usuario));
 
         Optional<Usuario> resultado = usuarioService.findByXIdUsuario(1);
         assertThat(resultado).isPresent();
-        assertThat(resultado.get().getNombre()).isEqualTo("Ana");
+        assertThat(resultado.get().getNombre()).isEqualTo("Ignacio");
         verify(usuarioRepository).findById(1);
     }
 
     @Test
     void testFindAllUsuarios() {
         List<Usuario> lista = new ArrayList<>();
-        lista.add(new Usuario(1, "Carlos", "Mora", "carlos@mail.com", rol));
+        lista.add(new Usuario(1, "Andrea", "Torres", "Andrea@mail.com", rol));
 
         when(usuarioRepository.findAll()).thenReturn(lista);
 
@@ -72,20 +72,20 @@ class UsuarioServiceTest {
 
     @Test
     void testEditUsuario() {
-        Usuario existente = new Usuario(1, "Luis", "Alvarez", "luis@mail.com", rol);
-        Usuario actualizado = new Usuario(1, "Luisito", "Alvarez", "luisito@mail.com", rol);
+        Usuario existente = new Usuario(1, "Jorge", "Barrera", "Jorge@mail.com", rol);
+        Usuario actualizado = new Usuario(1, "Jorge", "Barrera", "Jorge@mail.com", rol);
 
         when(usuarioRepository.findById(1)).thenReturn(Optional.of(existente));
         when(usuarioRepository.save(any(Usuario.class))).thenReturn(actualizado);
 
         Usuario resultado = usuarioService.editUsuario(1, actualizado);
-        assertThat(resultado.getNombre()).isEqualTo("Luisito");
-        assertThat(resultado.getEmail()).isEqualTo("luisito@mail.com");
+        assertThat(resultado.getNombre()).isEqualTo("Jorge");
+        assertThat(resultado.getEmail()).isEqualTo("Jorge@mail.com");
     }
 
     @Test
     void testEliminarUsuario() {
-        Usuario usuario = new Usuario(1, "Beto", "Quintero", "beto@mail.com", rol);
+        Usuario usuario = new Usuario(1, "Jorge", "Barrera", "Jorge@mail.com", rol);
 
         when(usuarioRepository.findById(1)).thenReturn(Optional.of(usuario));
 

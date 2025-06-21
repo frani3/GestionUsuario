@@ -43,8 +43,8 @@ public class UsuarioControllerTest {
     @Test
     void testGetAllUsuarios() throws Exception {
         List<Usuario> usuarios = Arrays.asList(
-                new Usuario(1, "Juan", "Pérez", "juan@mail.com", rol),
-                new Usuario(2, "Ana", "López", "ana@mail.com", rol)
+                new Usuario(1, "Francisca", "Barrera", "Francisca@mail.com", rol),
+                new Usuario(2, "Ignacio", "Sorko", "Ignacio@mail.com", rol)
         );
 
         when(usuarioService.findAllUsuarios()).thenReturn(usuarios);
@@ -52,24 +52,24 @@ public class UsuarioControllerTest {
         mockMvc.perform(get("/api/usuario"))
                 .andExpect(status().isAccepted())
                 .andExpect(jsonPath("$.size()").value(2))
-                .andExpect(jsonPath("$[0].nombre").value("Juan"))
-                .andExpect(jsonPath("$[1].nombre").value("Ana"));
+                .andExpect(jsonPath("$[0].nombre").value("Francisca"))
+                .andExpect(jsonPath("$[1].nombre").value("Ignacio"));
     }
 
     @Test
     void testGetUsuarioById() throws Exception {
-        Usuario usuario = new Usuario(1, "Luis", "González", "luis@mail.com", rol);
+        Usuario usuario = new Usuario(1, "Andrea", "Torres", "Andrea@mail.com", rol);
         when(usuarioService.findByXIdUsuario(1)).thenReturn(Optional.of(usuario));
 
         mockMvc.perform(get("/api/usuario/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nombre").value("Luis"));
+                .andExpect(jsonPath("$.nombre").value("Andrea"));
     }
 
     @Test
     void testCrearUsuario() throws Exception {
-        Usuario nuevo = new Usuario(0, "Sofía", "Martínez", "sofia@mail.com", rol);
-        Usuario guardado = new Usuario(1, "Sofía", "Martínez", "sofia@mail.com", rol);
+        Usuario nuevo = new Usuario(0, "Andres", "Sorko", "Andres@mail.com", rol);
+        Usuario guardado = new Usuario(1, "Andres", "Sorko", "Andres@mail.com", rol);
 
         when(usuarioService.findByXIdUsuario(null)).thenReturn(Optional.empty());
         when(usuarioService.crearUsuario(any(Usuario.class))).thenReturn(guardado);
@@ -78,12 +78,12 @@ public class UsuarioControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(nuevo)))
                 .andExpect(status().isAccepted())
-                .andExpect(jsonPath("$.nombre").value("Sofía"));
+                .andExpect(jsonPath("$.nombre").value("Andres"));
     }
 
     @Test
     void testEditarUsuario() throws Exception {
-        Usuario editado = new Usuario(1, "Luis", "González", "luisito@mail.com", rol);
+        Usuario editado = new Usuario(1, "Jorge", "Barrera", "Jorge@mail.com", rol);
 
         when(usuarioService.editUsuario(eq(1), any(Usuario.class))).thenReturn(editado);
 
@@ -91,16 +91,16 @@ public class UsuarioControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(editado)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.email").value("luisito@mail.com"));
+                .andExpect(jsonPath("$.email").value("Jorge@mail.com"));
     }
 
     @Test
     void testEliminarUsuario() throws Exception {
-        Usuario usuario = new Usuario(1, "Carlos", "Mora", "carlos@mail.com", rol);
+        Usuario usuario = new Usuario(1, "Martin", "Painemal", "Martin@mail.com", rol);
         when(usuarioService.eliminarUsuario(1)).thenReturn(Optional.of(usuario));
 
         mockMvc.perform(delete("/api/usuario/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.email").value("carlos@mail.com"));
+                .andExpect(jsonPath("$.email").value("Martin@mail.com"));
     }
 }
