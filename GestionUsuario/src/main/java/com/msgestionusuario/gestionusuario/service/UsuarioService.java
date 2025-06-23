@@ -11,13 +11,11 @@ import com.msgestionusuario.gestionusuario.repository.UsuarioRepository;
 
 @Service
 
-
 public class UsuarioService {
-
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-    
+
     public Usuario crearUsuario(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
@@ -25,13 +23,12 @@ public class UsuarioService {
     public Optional<Usuario> findByXIdUsuario(Integer idUsuario) {
         return usuarioRepository.findById(idUsuario);
     }
-    
 
     public List<Usuario> findAllUsuarios() {
         return usuarioRepository.findAll();
     }
-    
-    public Usuario editUsuario(Integer idUsuario, Usuario usuario){
+
+    public Usuario editUsuario(Integer idUsuario, Usuario usuario) {
         Optional<Usuario> usuarioExistente = usuarioRepository.findById(idUsuario);
         if (usuarioExistente.isPresent()) {
             Usuario usuarioActualizado = usuarioExistente.get();
@@ -47,13 +44,10 @@ public class UsuarioService {
 
     public Optional<Usuario> eliminarUsuario(int idUsuario) {
         Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
-        if (usuario != null) { 
+        if (usuario.isPresent()) {
             usuarioRepository.deleteById(idUsuario);
             return usuario;
         }
         return Optional.empty();
     }
-
-    
 }
-
