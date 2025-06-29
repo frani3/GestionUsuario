@@ -84,25 +84,26 @@ public class RolServiceTest {
     }
 
 
-    @Test
-    void testEliminarRol_SinUsuarios() {
-        Rol rol = new Rol(1, Roles.Profesor, "Impartir clases", null);
-        when(rolRepository.findById(1)).thenReturn(Optional.of(rol));
+@Test
+void testEliminarRol_SinUsuarios() {
+    Rol rolSinUsuarios = new Rol(1, Roles.Profesor, "Impartir clases", null);
+    when(rolRepository.findById(1)).thenReturn(Optional.of(rolSinUsuarios));
 
-        Rol resultado = rolService.eliminarRol(1);
+    Rol resultado = rolService.eliminarRol(1);
 
-        assertThat(resultado).isNotNull();
-        verify(rolRepository).deleteById(1);
-    }
+    assertThat(resultado).isNotNull();
+    verify(rolRepository).deleteById(1); 
+}
 
-    @Test
-    void testEliminarRol_ConUsuarios() {
-        Rol rol = new Rol(1, Roles.Profesor, "Impartir clases", List.of(new Usuario()));
-        when(rolRepository.findById(1)).thenReturn(Optional.of(rol));
+@Test
+void testEliminarRol_ConUsuarios() {
+    Rol rolConUsuarios = new Rol(1, Roles.Profesor, "Impartir clases", List.of(new Usuario()));
+    when(rolRepository.findById(1)).thenReturn(Optional.of(rolConUsuarios));
 
-        Rol resultado = rolService.eliminarRol(1);
+    Rol resultado = rolService.eliminarRol(1);
 
-        assertThat(resultado).isNull();
-        verify(rolRepository, never()).deleteById(anyInt());
-    }
+    assertThat(resultado).isNull(); 
+    verify(rolRepository, never()).deleteById(anyInt()); 
+}
+
 }
