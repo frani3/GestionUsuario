@@ -109,27 +109,6 @@ public class RolControllerTest {
                 .andExpect(status().isNoContent());
     }
 
-    @Test
-    void testPutRol_actualizaCorrecto() throws Exception {
-        Rol actualizado = new Rol(1, Roles.Profesor, "Actualizar rol", null);
-        when(rolService.editRol(eq(1), any(Rol.class))).thenReturn(actualizado);
-
-        mockMvc.perform(put("/api/rol/1")
-                .contentType("application/json")
-                .content(objectMapper.writeValueAsString(actualizado)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.funcion").value("Actualizar rol"));
-    }
-
-    @Test
-    void testPutRol_noEncontrado() throws Exception {
-        when(rolService.editRol(eq(1), any(Rol.class))).thenReturn(null);
-
-        mockMvc.perform(put("/api/rol/1")
-                .contentType("application/json")
-                .content(objectMapper.writeValueAsString(rol)))
-                .andExpect(status().isNotFound());
-    }
 
     @Test
     void testDeleteRol_eliminadoCorrecto() throws Exception {

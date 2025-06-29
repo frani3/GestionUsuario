@@ -65,16 +65,6 @@ public class RolController {
         }
     }
 
-    @PutMapping("/{idRol}")
-    public ResponseEntity<Rol> putRol(@RequestBody Rol rol) {
-        Rol actualizado = rolService.editRol(rol.getIdRol(), rol);
-        if (actualizado != null) {
-            return new ResponseEntity<>(actualizado, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
     @DeleteMapping("/{idRol}")
     public ResponseEntity<Rol> deleteRol(@PathVariable Integer idRol) {
         Rol eliminado = rolService.eliminarRol(idRol);

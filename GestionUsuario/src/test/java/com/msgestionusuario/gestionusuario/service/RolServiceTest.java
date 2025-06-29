@@ -83,21 +83,6 @@ public class RolServiceTest {
         verify(rolRepository).findAll();
     }
 
-    @Test
-    void testEditRol() {
-        Rol existente = new Rol(1, Roles.Profesor, "Impartir clases", null);
-        Rol nuevo = new Rol(1, Roles.Profesor, "Impartir evaluaciones", null);
-
-        when(rolRepository.findById(1)).thenReturn(Optional.of(existente));
-        when(rolRepository.save(any(Rol.class))).thenAnswer(invocation -> invocation.getArgument(0));
-
-        Rol resultado = rolService.editRol(1, nuevo);
-
-        assertThat(resultado).isNotNull();
-        assertThat(resultado.getNombreRol()).isEqualTo(Roles.Profesor);
-        assertThat(resultado.getFuncion()).isEqualTo("Impartir evaluaciones");
-        verify(rolRepository).save(any(Rol.class));
-    }
 
     @Test
     void testEliminarRol_SinUsuarios() {

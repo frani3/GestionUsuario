@@ -32,17 +32,6 @@ public class RolService {
         return rolRepository.findAll();
     }
 
-    public Rol editRol(Integer idRol, Rol rol) {
-        Optional<Rol> rolExistente = rolRepository.findById(idRol);
-        if (rolExistente.isPresent()) {
-            Rol rolActualizado = rolExistente.get();
-            rolActualizado.setNombreRol(rol.getNombreRol());
-            rolActualizado.setFuncion(rol.getFuncion());
-            return rolRepository.save(rolActualizado);
-        }
-        return null;
-    }
-
     public Rol eliminarRol(int idRol) {
         Optional<Rol> rolOpt = rolRepository.findById(idRol);
         if (rolOpt.isPresent()) {
