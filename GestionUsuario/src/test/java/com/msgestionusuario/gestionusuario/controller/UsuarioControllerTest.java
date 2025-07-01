@@ -1,6 +1,7 @@
 package com.msgestionusuario.gestionusuario.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.msgestionusuario.gestionusuario.assemblers.UsuarioModelAssembler;
 import com.msgestionusuario.gestionusuario.model.Rol;
 import com.msgestionusuario.gestionusuario.model.Roles;
 import com.msgestionusuario.gestionusuario.model.Usuario;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -23,6 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UsuarioController.class)
+@Import(UsuarioModelAssembler.class)
 public class UsuarioControllerTest {
 
     @Autowired
@@ -51,7 +54,7 @@ public class UsuarioControllerTest {
         mockMvc.perform(post("/api/usuario")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(nuevo)))
-                .andExpect(status().isAccepted())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.idUsuario").value(1));
     }
 
@@ -61,8 +64,8 @@ public class UsuarioControllerTest {
         when(usuarioService.findAllUsuarios()).thenReturn(usuarios);
 
         mockMvc.perform(get("/api/usuario"))
-                .andExpect(status().isAccepted())
-                .andExpect(jsonPath("$.size()").value(1));
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()").value(2));
     }
 
     @Test
@@ -106,7 +109,7 @@ public class UsuarioControllerTest {
         mockMvc.perform(post("/api/usuario")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(existente)))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isConflict());
     }
 
     @Test

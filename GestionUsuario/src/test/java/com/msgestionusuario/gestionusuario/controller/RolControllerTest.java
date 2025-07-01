@@ -1,5 +1,6 @@
 package com.msgestionusuario.gestionusuario.controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -7,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.msgestionusuario.gestionusuario.assemblers.RolModelAssembler;
 import com.msgestionusuario.gestionusuario.model.Rol;
 import com.msgestionusuario.gestionusuario.model.Roles;
 import com.msgestionusuario.gestionusuario.service.RolService;
@@ -15,10 +17,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @WebMvcTest(RolController.class)
+@Import(RolModelAssembler.class)
 public class RolControllerTest {
 
     @Autowired
@@ -44,7 +48,7 @@ public class RolControllerTest {
         mockMvc.perform(post("/api/rol")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(rol)))
-                .andExpect(status().isAccepted())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.idRol").value(1));
     }
 
@@ -55,7 +59,7 @@ public class RolControllerTest {
         mockMvc.perform(post("/api/rol")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(rol)))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isConflict());
     }
 
     @Test
@@ -63,8 +67,8 @@ public class RolControllerTest {
         when(rolService.findAllRoles()).thenReturn(List.of(rol));
 
         mockMvc.perform(get("/api/rol"))
-                .andExpect(status().isAccepted())
-                .andExpect(jsonPath("$[0].idRol").value(1));
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$._embedded.rolList[0].idRol").value(1));
     }
 
     @Test
@@ -80,7 +84,7 @@ public class RolControllerTest {
         when(rolService.findxIdRol(1)).thenReturn(rol);
 
         mockMvc.perform(get("/api/rol/id=1"))
-                .andExpect(status().isAccepted())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.idRol").value(1));
     }
 
@@ -97,7 +101,7 @@ public class RolControllerTest {
         when(rolService.findxNombreRol("Profesor")).thenReturn(rol);
 
         mockMvc.perform(get("/api/rol/nombreRol=Profesor"))
-                .andExpect(status().isAccepted())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.nombreRol").value("Profesor"));
     }
 
@@ -108,7 +112,6 @@ public class RolControllerTest {
         mockMvc.perform(get("/api/rol/nombreRol=ADMINISTRADOR"))
                 .andExpect(status().isNoContent());
     }
-
 
     @Test
     void testDeleteRol_eliminadoCorrecto() throws Exception {
